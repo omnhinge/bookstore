@@ -1,0 +1,16 @@
+{% extends 'bookstore/base.html' %}
+
+{% block content %}
+<div class="admin-container">
+    <h2><i class="fas fa-user-shield"></i> Admin Panel</h2>
+    
+    <div class="admin-links">
+        <a href="{% url 'manage_books' %}" class="btn btn-admin">
+            <i class="fas fa-book"></i> Manage Books
+        </a>
+        <a href="{% url 'user_list' %}" class="btn btn-admin">
+            <i class="fas fa-users"></i> Manage Users
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'bookstore/base.html' %}
+{% load humanize %}
+
+{% block title %}Your Cart - Bookstore{% endblock %}
+
+{% block content %}
+    <div class="cart-container">
+        <h1 class="mb-4"><i class="fas fa-shopping-cart"></i> Your Shopping Cart</h1>
+        
+        {% if cart_items %}
+            <div class="cart-table table-responsive">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Book</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        {% if item.book.cover_image %}
+                                            <img src="{{ item.book.cover_image.url }}" alt="{{ item.book.title }}" 
+                                                 class="img-thumbnail me-3" style="width: 60px;">
+                                        {% else %}
+                                            <div class="img-thumbnail me-3 d-flex align-items-center justify-content-center" 
+                                                 style="width: 60px; height: 80px; background-color: #f8f9fa;">
+                                                <i class="fas fa-book text-muted"></i>
+                                            </div>
+                                        {% endif %}
+                                        <div>
+                                            <strong>{{ item.book.title }}</strong><br>
+                                            <small class="text-muted">by {{ item.book.author }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Rs{{ item.book.price|intcomma }}</td>
+                                <td>
+                                    <form method="post" action="{% url 'update_cart_item' item.id %}" class="d-flex">
+                                        {% csrf_token %}
+                                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
+                                               class="form-control form-control-sm" style="width: 70px;">
+                                        <button type="submit" class="btn btn-sm btn-outline-primary ms-2">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>Rs{{ item.total_price|intcomma }}</td>
+                                <td>
+                                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Remove
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class="table-secondary">
+                        <tr>
+                            <th colspan="3" class="text-end">Total</th>
+                            <th colspan="2">Rs{{ cart.total_price|intcomma }}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Continue Shopping
+                </a>
+                <a href="#" class="btn btn-success">
+                    <i class="fas fa-credit-card"></i> Proceed to Checkout
+                </a>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center py-4">
+                <i class="fas fa-shopping-cart fa-3x mb-3 text-muted"></i>
+                <h4>Your cart is empty</h4>
+                <p class="mb-0">Browse our <a href="{% url 'home' %}">collection of books</a> to add items to your cart.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
