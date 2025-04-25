@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'final_02-web'
+        IMAGE_NAME = 'final_02-web:latest'
     }
 
     stages {
