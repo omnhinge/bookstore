@@ -75,16 +75,40 @@ WSGI_APPLICATION = 'bookstore_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # Database configuration (MySQL)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'bookstore_db',
+#         'USER': 'root',  # or your MySQL username
+#         'PASSWORD': '150320',  # your MySQL password
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+import os
+import pymysql
+pymysql.install_as_MySQLdb()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bookstore_db',
-        'USER': 'root',  # or your MySQL username
-        'PASSWORD': '150320',  # your MySQL password
+        'USER': 'root',
+        'PASSWORD': '150320',
         'HOST': 'localhost',
         'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'bookstore_db',
+#         'USER': 'root',
+#         'PASSWORD': 'mypassword',
+#         'HOST': 'db',
+#         'PORT': '3306',
+#     }
+# }
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
