@@ -1,0 +1,25 @@
+[
+    {
+      "model": "bookstore.book",
+      "pk": 1,
+      "fields": {
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "price": "9.99",
+        "stock": 20,
+        "description": "A novel about the American dream and the roaring twenties."
+      }
+    },
+    {
+      "model": "bookstore.book",
+      "pk": 2,
+      "fields": {
+        "title": "1984",
+        "author": "George Orwell",
+        "price": "12.50",
+        "stock": 15,
+        "description": "A dystopian social science fiction novel and cautionary tale."
+      }
+    }
+  ]
+  

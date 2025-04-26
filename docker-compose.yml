@@ -1,3 +1,4 @@
+version: '3.8'
 
 services:
   db:
@@ -6,18 +7,18 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: bookstore_db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: mypassword
       MYSQL_ROOT_PASSWORD: mypassword
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - bookstore_net
 
   web:
     build: .
     container_name: django_container
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
@@ -30,6 +31,46 @@ services:
       - DB_PASSWORD=mypassword
       - DB_HOST=db
       - DB_PORT=3306
+    networks:
+      - bookstore_net
 
 volumes:
   mysql_data:
+
+networks:
+  bookstore_net:
+    driver: bridge
+
+
+# services:
+#   db:
+#     image: mysql:8.0
+#     container_name: mysql_container
+#     restart: always
+#     environment:
+#       MYSQL_DATABASE: bookstore_db
+#       MYSQL_ROOT_PASSWORD: mypassword   
+#     ports:
+#       - "3307:3306"                     
+#     volumes:
+#       - mysql_data:/var/lib/mysql
+
+#   web:
+#     build: .
+#     container_name: django_container
+#     command: python manage.py runserver 0.0.0.0:8000
+#     volumes:
+#       - .:/app
+#     ports:
+#       - "8000:8000"
+#     depends_on:
+#       - db
+#     environment:
+#       - DB_NAME=bookstore_db
+#       - DB_USER=root
+#       - DB_PASSWORD=mypassword
+#       - DB_HOST=db
+#       - DB_PORT=3306
+
+# volumes:
+#   mysql_data:

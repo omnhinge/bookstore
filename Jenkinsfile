@@ -21,14 +21,10 @@ pipeline {
         }
 
         stage('Run Tests') {
-            steps {
-                script {
-                    docker.image(IMAGE_NAME).inside {
-                        sh 'python manage.py test'
-                    }
-                }
-            }
-        }
+    steps {
+        sh "docker run --rm ${IMAGE_NAME} python manage.py test"
+    }
+}
 
         stage('Deploy') {
             when {
