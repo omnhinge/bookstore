@@ -24,16 +24,6 @@ pipeline {
             }
         }
 
-        stage('Push to Docker Hub') {
-            steps {
-                echo '📤 Pushing image to Docker Hub...'
-                script {
-                    // For public repos, no login needed
-                    dockerImage.push()
-                }
-            }
-        }
-    }
 
     post {
         success {
