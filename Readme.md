@@ -56,7 +56,7 @@ Now, you can visit `http://127.0.0.1:8000/` in your browser.
 
 Example:
 
-![Screenshot of Bookstore](link-to-your-screenshot.png)
+![Screenshot of Bookstore](screenshots)
 
 ## Docker and Jenkins Usage Notes
 
