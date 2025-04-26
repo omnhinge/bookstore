@@ -17,20 +17,20 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo '🐳 Building Docker image...'
+                echo '🐳 Building Docker image locally...'
                 script {
-                    dockerImage = docker.build("${REPOSITORY}/${IMAGE_NAME}:${TAG}")
+                    docker.build("${REPOSITORY}/${IMAGE_NAME}:${TAG}")
                 }
             }
         }
-
+    }
 
     post {
         success {
-            echo '✅ Deployment pipeline completed successfully!'
+            echo '✅ Build completed locally!'
         }
         failure {
-            echo '❌ Deployment pipeline failed. Check the logs.'
+            echo '❌ Build failed.'
         }
     }
 }
