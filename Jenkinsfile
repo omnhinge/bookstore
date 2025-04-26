@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -11,22 +10,25 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo '📦 Checking out source code...'
                 checkout scm
             }
         }
 
         stage('Build Docker Image') {
             steps {
+                echo '🐳 Building Docker image...'
                 script {
                     dockerImage = docker.build("${REPOSITORY}/${IMAGE_NAME}:${TAG}")
                 }
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push to Docker Hub') {
             steps {
+                echo '📤 Pushing image to Docker Hub...'
                 script {
-                    // Push to public Docker Hub repo (no login needed)
+                    // For public repos, no login needed
                     dockerImage.push()
                 }
             }
@@ -35,11 +37,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Pipeline completed successfully!'
+            echo '✅ Deployment pipeline completed successfully!'
         }
         failure {
-            echo '❌ Pipeline failed. Check logs above.'
+            echo '❌ Deployment pipeline failed. Check the logs.'
         }
     }
 }
-
